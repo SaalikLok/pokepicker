@@ -1,26 +1,25 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Pokemon from './Pokemon'
+import styled from '@emotion/styled'
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 5em 5em 5em;
+  grid-template-rows: 5em 5em;
+  gap: 1em;
+  justify-content: center;
+`
 
 const PokeGrid = props => {
-  const [pokemon, setPokemon] = useState({
-    name: "pikachu",
-    img: ""
+  const displayPokemon = props.pokemon.map(poke => {
+    return <Pokemon key={poke.id} name={poke.name} img={poke.img}/>
   })
 
-  const addPokemon = async () => {
-    const pokeData = await props.getPokemon("pikachu")
-    setPokemon({name: pokeData.name, img: pokeData.sprites.front_default})
-  }
-
-  useEffect(() => {
-    addPokemon()
-  },[])
-
   return (
-    <div>
-      Something
-      <Pokemon name={pokemon.name} img={pokemon.img}/>
-    </div>
+    <Grid>
+      {displayPokemon}
+      <button onClick={props.addPokemon}>Add Ditto</button>
+    </Grid>
   )
 }
 
