@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import "babel-polyfill"
 import getPokemon from './data/getPokemon'
 import PokeGrid from './components/PokeGrid'
+import AddPokemonForm from './components/AddPokemonForm'
 
 const MainDiv = styled.div`
   text-align: center;
@@ -12,22 +13,23 @@ const MainDiv = styled.div`
 `
 
 const App = () => {
-  const [pokemon, setPokemon] = useState([{id: 132, name:"ditto", img:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"}])
+  // The big piece here to make sure that the array maxes out at 6 items. 
+  // The visitor should be able to remove pokemon from the array at will, and have an empty spot show up
+  // There should also be a message that sends a warning if someone is trying to add pokemon to the array when it is full.
 
-  const addPokemon = async () => {
-    const pokeData = await getPokemon("pikachu")
+  const [pokemon, setPokemon] = useState([])
+
+  const addPokemon = async (pokemonName) => {
+    const pokeData = await getPokemon(pokemonName.toLowerCase())
     setPokemon(pokemon.concat([{ id:pokeData.id, name: pokeData.name, img: pokeData.sprites.front_default}]))
   }
-
-  useEffect(() => {
-    addPokemon()
-  },[])
 
   return (
     <MainDiv>
       <h1>PokePicker</h1>
       <p>Choose your Pokemon!</p>
       <PokeGrid pokemon={pokemon} addPokemon={addPokemon}/>
+      <AddPokemonForm addPokemon={addPokemon}/>
     </MainDiv>
   )
 }

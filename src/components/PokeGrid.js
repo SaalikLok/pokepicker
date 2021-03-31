@@ -10,15 +10,22 @@ const Grid = styled.div`
   justify-content: center;
 `
 
+const GridItem = styled.div`
+  background: #4a4a4a;
+  border-radius: 0.5em;
+`
+
 const PokeGrid = props => {
   const displayPokemon = props.pokemon.map(poke => {
+    if(!poke){
+      return <GridItem/>
+    }
     return <Pokemon key={poke.id} name={poke.name} img={poke.img}/>
   })
 
   return (
     <Grid>
       {displayPokemon}
-      <button onClick={props.addPokemon}>Add Ditto</button>
     </Grid>
   )
 }
