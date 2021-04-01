@@ -1,26 +1,36 @@
-import React from 'react'
-import Pokemon from './Pokemon'
+import React, { useEffect } from 'react'
+import GridItem from './GridItem'
 import styled from '@emotion/styled'
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 5em 5em 5em;
-  grid-template-rows: 5em 5em;
-  gap: 1em;
+  grid-template-columns: 8em 8em 8em;
+  grid-template-rows: 8em 8em;
+  gap: 2em;
   justify-content: center;
+  align-items: center;
 `
 
-const GridItem = styled.div`
+const Item = styled.div`
+  display: block;
   background: #4a4a4a;
   border-radius: 0.5em;
+  width: 8em;
+  height: 7em;
 `
 
 const PokeGrid = props => {
   const displayPokemon = props.pokemon.map(poke => {
-    if(!poke){
-      return <GridItem/>
+    if(!poke.pokeData){
+      console.log("Empty Grid Item to be rendered")
+      return <Item key={poke.id}/>
     }
-    return <Pokemon key={poke.id} name={poke.name} img={poke.img}/>
+    return <GridItem 
+      key={poke.id} 
+      id={poke.id} 
+      name={poke.pokeData.name} 
+      img={poke.pokeData.sprites.front_default}
+    />
   })
 
   return (
